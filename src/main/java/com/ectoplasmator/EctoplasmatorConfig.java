@@ -8,12 +8,24 @@ import net.runelite.client.config.ConfigItem;
 public interface EctoplasmatorConfig extends Config
 {
 	@ConfigItem(
-		keyName = "greeting",
-		name = "Welcome Greeting",
-		description = "The message to show to the user when they login"
+		position = 1,
+		keyName = "hideWhileInInventory",
+		name = "Hide overlay if in Inventory",
+		description = "Hides the Ectoplasmator overlay if it's in player's inventory"
 	)
-	default String greeting()
+	default boolean hideIfInventory()
 	{
-		return "Hello";
+		return true;
+	}
+
+	@ConfigItem(
+		position = 2,
+		keyName = "displayOnlyInCombat",
+		name = "Display Only In Combat",
+		description = "Display the Ectoplasmator overlay only while in combat"
+	)
+	default boolean onlyInCombat()
+	{
+		return false;
 	}
 }

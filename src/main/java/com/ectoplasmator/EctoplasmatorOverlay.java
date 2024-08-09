@@ -28,6 +28,9 @@ class EctoplasmatorOverlay extends Overlay
 	@Inject
 	private SpectralCreatures spectralCreatures;
 
+	@Inject
+	private EctoplasmatorConfig config;
+
 	private final Client client;
 	private final EctoplasmatorPlugin plugin;
 	private final ItemManager itemManager;
@@ -62,21 +65,32 @@ class EctoplasmatorOverlay extends Overlay
 			return null;
 		}
 
+
 		// If the player does not have an Ectoplasmator in their inventory - then render overlay;
-		if (!client.getItemContainer(InventoryID.INVENTORY).contains(ECTOPLASMATOR))
+		if (config.hideIfInventory())
 		{
-			for (NPC target : targets)
+			if (!client.getItemContainer(InventoryID.INVENTORY).contains(ECTOPLASMATOR))
 			{
-				// TODO: Config check for player is in combat
-				// TODO: config check for player is in wilderness
-				// Checks if the target is a spectral creature
-				if (spectralCreatures.getSpectralCreatures().contains(target.getId()))
-				{
-					renderTargetItem(graphics, target, image);
-				}
+				renderOverlay(targets, graphics, image);
+			}
+
+		} else {
+			renderOverlay(targets, graphics, image);
+		}
+
+		return null;
+	}
+
+	// Iterates through all the NPC targets, and if they are a spectral creature, render the overlay
+	private void renderOverlay(List<NPC> targets, Graphics2D graphics, BufferedImage image){
+		for (NPC target : targets)
+		{
+			// Checks if the target is a spectral creature
+			if (spectralCreatures.getSpectralCreatures().contains(target.getId()))
+			{
+				renderTargetItem(graphics, target, image);
 			}
 		}
-		return null;
 	}
 
 	// Code snippet taken from:
