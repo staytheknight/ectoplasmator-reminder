@@ -66,7 +66,7 @@ class EctoplasmatorOverlay extends Overlay
 		final Item[] inventoryItems = plugin.getInventoryItems();
 
 		// If the player does not have an Ectoplasmator in their inventory - then render overlay;
-		if (!HAS_ECTOPLASMATOR.fulfilledBy(inventoryItems))
+		if (HAS_ECTOPLASMATOR.fulfilledBy(inventoryItems))
 		{
 			for (NPC target : targets)
 			{
@@ -77,6 +77,9 @@ class EctoplasmatorOverlay extends Overlay
 		return null;
 	}
 
+	// Code snippet taken from:
+	// runelite/client/plugins/slayer/TargetWeaknessOverlay.java
+	// Altered to have a modifiable height adjustment through config
 	private void renderTargetItem(Graphics2D graphics, NPC actor, BufferedImage image)
 	{
 		final LocalPoint actorPosition = actor.getLocalLocation();

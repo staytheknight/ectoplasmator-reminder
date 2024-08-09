@@ -15,6 +15,7 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.NPC;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.config.ConfigManager;
@@ -41,24 +42,11 @@ public class EctoplasmatorPlugin extends Plugin
 	@Inject
 	private EctoplasmatorOverlay overlay;
 
-	// Getters for inventory items, the function is there as the @Getter is not being seeing in
-	// EctoplasmatorOverlay.java
 	@Getter
 	private Item[] inventoryItems;
 
-	public Item[] getInventoryItems()
-	{
-		return inventoryItems;
-	}
-
-	// Getter for target NPC to display overlay above
 	@Getter(AccessLevel.PACKAGE)
 	private final List<NPC> NPCTargets = new ArrayList<>();
-
-	public List<NPC> getNPCTargets()
-	{
-		return NPCTargets;
-	}
 
 	// When an NPC spawns, add it to the NPC targets list
 	@Subscribe
@@ -83,6 +71,17 @@ public class EctoplasmatorPlugin extends Plugin
 	{
 		final ItemContainer itemContainer = event.getItemContainer();
 		inventoryItems = itemContainer.getItems();
+	}
+
+	@Subscribe
+	public void onMenuOptionClicked(final MenuOptionClicked event)
+	{
+		if (event.getMenuOption() == null)
+		{
+			return;
+		}
+
+		overlay.revalidate();
 	}
 
 	@Override
