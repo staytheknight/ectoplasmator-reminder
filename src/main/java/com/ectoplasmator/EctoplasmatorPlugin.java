@@ -107,5 +107,4 @@ public class EctoplasmatorPlugin extends Plugin
 	}
 
 
-
 }
