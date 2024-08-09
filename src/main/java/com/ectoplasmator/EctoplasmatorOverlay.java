@@ -5,9 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemID;
@@ -16,8 +14,6 @@ import net.runelite.api.NPC;
 import net.runelite.api.Perspective;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
@@ -37,9 +33,9 @@ class EctoplasmatorOverlay extends Overlay
 	private final ItemManager itemManager;
 
 	// Display variables
-	private boolean inCombat;									// Boolean for if the player is in combat
-	private List<Boolean> displayChecks = new ArrayList<>();	// Boolean array of display toggles
-	private boolean displayToggle;								// Final display toggle boolean
+	private boolean combatStatus;
+	private List<Boolean> displayChecks = new ArrayList<>();    // Boolean array of display toggles
+	private boolean displayToggle;                                // Final display toggle boolean
 
 	// Class Constructor
 	@Inject
@@ -55,26 +51,9 @@ class EctoplasmatorOverlay extends Overlay
 		displayToggle = true;
 	}
 
-	// Triggers when a hitsplat is detected in the world
-	@Subscribe
-	public void onHitsplatApplied(HitsplatApplied event) throws InterruptedException
+	public void setCombatStatus(boolean combatStatus)
 	{
-		// Filters hitsplats so that it only triggers for the player
-		if (event.getActor() != client.getLocalPlayer())
-		{
-			return;
-		}
-
-		// Sets the in combat statue to true, and calls the combat timer
-		inCombat = true;
-		combatTimer();
-	}
-
-	// Combat timer sets the combat statue to false after 10 seconds
-	public void combatTimer() throws InterruptedException
-	{
-		TimeUnit.SECONDS.sleep(10);
-		inCombat = false;
+		this.combatStatus = combatStatus;
 	}
 
 	@Override
@@ -97,7 +76,7 @@ class EctoplasmatorOverlay extends Overlay
 		}
 
 		// Clears the boolean array on each render loop
-		if(!displayChecks.isEmpty())
+		if (!displayChecks.isEmpty())
 		{
 			displayChecks.clear();
 		}
@@ -109,14 +88,14 @@ class EctoplasmatorOverlay extends Overlay
 		}
 		if (config.onlyInCombat())
 		{
-			displayChecks.add(inCombat);
+			displayChecks.add(combatStatus);
 		}
 
 		// Iterates through the display check boolean array to see if any of the booleans are false
 		// If they are false set the master toggle to false and break
 		for (boolean b : displayChecks)
 		{
-			if(!b)
+			if (!b)
 			{
 				displayToggle = false;
 				break;
@@ -127,37 +106,23 @@ class EctoplasmatorOverlay extends Overlay
 			}
 		}
 
-		if(displayChecks.isEmpty())
+		if (displayChecks.isEmpty())
 		{
 			displayToggle = true;
 		}
 
 		// If the master display toggle is true, display the overlay
-		if(displayToggle)
+		if (displayToggle)
 		{
 			renderOverlay(targets, graphics, image);
 		}
-
-		/*
-		// If the player does not have an Ectoplasmator in their inventory - then render overlay;
-		if (config.hideIfInventory())
-		{
-			if (!client.getItemContainer(InventoryID.INVENTORY).contains(ECTOPLASMATOR))
-			{
-				renderOverlay(targets, graphics, image);
-			}
-		}
-
-		else
-		{
-			renderOverlay(targets, graphics, image);
-		}*/
 
 		return null;
 	}
 
 	// Iterates through all the NPC targets, and if they are a spectral creature, render the overlay
-	private void renderOverlay(List<NPC> targets, Graphics2D graphics, BufferedImage image){
+	private void renderOverlay(List<NPC> targets, Graphics2D graphics, BufferedImage image)
+	{
 		for (NPC target : targets)
 		{
 			// Checks if the target is a spectral creature

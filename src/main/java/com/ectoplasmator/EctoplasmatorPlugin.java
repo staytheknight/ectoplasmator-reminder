@@ -3,21 +3,17 @@ package com.ectoplasmator;
 import com.google.inject.Provides;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.inject.Inject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.InventoryID;
-import net.runelite.api.Item;
-import net.runelite.api.ItemContainer;
 import net.runelite.api.NPC;
 import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.ItemContainerChanged;
-import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.config.ConfigManager;
@@ -47,6 +43,31 @@ public class EctoplasmatorPlugin extends Plugin
 	@Getter(AccessLevel.PACKAGE)
 	private final List<NPC> NPCTargets = new ArrayList<>();
 
+	Timer timer = new Timer("Timer");
+
+	// Triggers when a hitsplat is detected (on player & on NPC from the player)
+	@Subscribe
+	public void onHitsplatApplied(HitsplatApplied hitSplat) throws InterruptedException
+	{
+		// Sets the in combat statue to true, and calls the combat timer
+		overlay.setCombatStatus(true);
+		outOfCombat();
+	}
+
+	// Combat timer sets the combat statue to false after 10 seconds
+	public void outOfCombat() throws InterruptedException
+	{
+		TimerTask task = new TimerTask()
+		{
+			public void run()
+			{
+				overlay.setCombatStatus(false);
+			}
+		};
+		long delay = 10000L; // 10000L = 10 seconds
+		timer.schedule(task, delay);
+	}
+
 	// When an NPC spawns, add it to the NPC targets list
 	@Subscribe
 	public void onNpcSpawned(NpcSpawned npcSpawned)
@@ -68,6 +89,7 @@ public class EctoplasmatorPlugin extends Plugin
 	{
 		overlayManager.add(overlay);
 		overlay.revalidate();
+		overlay.setCombatStatus(false);
 	}
 
 	@Override
