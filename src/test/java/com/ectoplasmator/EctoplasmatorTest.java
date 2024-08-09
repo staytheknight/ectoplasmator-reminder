@@ -1,13 +1,13 @@
-package com.example;
+package com.ectoplasmator;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class EctoplasmatorTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(EctoplasmatorPlugin.class);
 		RuneLite.main(args);
 	}
 }
