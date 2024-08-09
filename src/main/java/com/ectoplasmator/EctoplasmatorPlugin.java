@@ -46,7 +46,12 @@ public class EctoplasmatorPlugin extends Plugin
 
 	// Getter for target NPC to display overlay above
 	@Getter(AccessLevel.PACKAGE)
-	private final List<NPC> NPCtargets = new ArrayList<>();
+	private final List<NPC> NPCTargets = new ArrayList<>();
+
+	public List<NPC> getNPCTargets()
+	{
+		return NPCTargets;
+	}
 
 	// When an NPC spawns, add it to the NPC targets list
 	@Subscribe
@@ -54,7 +59,7 @@ public class EctoplasmatorPlugin extends Plugin
 	{
 		NPC npc = npcSpawned.getNpc();
 		// TODO: Add a conditional for spectral creatures
-		NPCtargets.add(npc);
+		NPCTargets.add(npc);
 	}
 
 	// When an NPC despawned, remove it from the NPC targets list
@@ -62,7 +67,7 @@ public class EctoplasmatorPlugin extends Plugin
 	public void onNpcDespawned(NpcDespawned npcDespawned)
 	{
 		NPC npc = npcDespawned.getNpc();
-		NPCtargets.remove(npc);
+		NPCTargets.remove(npc);
 	}
 
 	// This gets called when a player picks up, drops, or takes an item from the bank
@@ -83,7 +88,7 @@ public class EctoplasmatorPlugin extends Plugin
 	protected void shutDown() throws Exception
 	{
 		inventoryItems = null;
-		NPCtargets.clear();
+		NPCTargets.clear();
 	}
 
 	@Subscribe
@@ -100,6 +105,7 @@ public class EctoplasmatorPlugin extends Plugin
 	{
 		return configManager.getConfig(EctoplasmatorConfig.class);
 	}
+
 
 
 }
