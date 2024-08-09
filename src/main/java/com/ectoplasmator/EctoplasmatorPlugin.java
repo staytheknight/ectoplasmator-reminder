@@ -21,6 +21,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
 
 @Slf4j
 @PluginDescriptor(
@@ -32,7 +33,13 @@ public class EctoplasmatorPlugin extends Plugin
 	private Client client;
 
 	@Inject
+	private OverlayManager overlayManager;
+
+	@Inject
 	private EctoplasmatorConfig config;
+
+	@Inject
+	private EctoplasmatorOverlay overlay;
 
 	// Getters for inventory items, the function is there as the @Getter is not being seeing in
 	// EctoplasmatorOverlay.java
@@ -81,12 +88,14 @@ public class EctoplasmatorPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-
+		overlayManager.add(overlay);
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
+		overlayManager.remove(overlay);
+
 		inventoryItems = null;
 		NPCTargets.clear();
 	}
