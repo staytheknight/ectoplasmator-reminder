@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import static net.runelite.api.ItemID.*;
@@ -24,6 +25,9 @@ import net.runelite.client.ui.overlay.OverlayUtil;
 
 class EctoplasmatorOverlay extends Overlay
 {
+	@Inject
+	private SpectralCreatures spectralCreatures;
+
 	private final Client client;
 	private final EctoplasmatorPlugin plugin;
 	private final ItemManager itemManager;
@@ -38,10 +42,6 @@ class EctoplasmatorOverlay extends Overlay
 		setPosition(OverlayPosition.DYNAMIC);
 		setLayer(OverlayLayer.UNDER_WIDGETS);
 	}
-
-	// Check to see if Ectoplasmator is in the player's inventory
-	private static final ItemRequirement HAS_ECTOPLASMATOR = new AnyRequirementCollection("Ectoplasmator",
-		item(ECTOPLASMATOR));
 
 	@Override
 	public Dimension render(Graphics2D graphics)
@@ -62,17 +62,19 @@ class EctoplasmatorOverlay extends Overlay
 			return null;
 		}
 
-		// Gets all the items in the player's inventory
-		final Item[] inventoryItems = plugin.getInventoryItems();
-
 		// If the player does not have an Ectoplasmator in their inventory - then render overlay;
-		if (HAS_ECTOPLASMATOR.fulfilledBy(inventoryItems))
+		if (!client.getItemContainer(InventoryID.INVENTORY).contains(ECTOPLASMATOR))
 		{
 			for (NPC target : targets)
 			{
-				renderTargetItem(graphics, target, image);
+				// TODO: Config check for player is in combat
+				// TODO: config check for player is in wilderness
+				// Checks if the target is a spectral creature
+				if (spectralCreatures.getSpectralCreatures().contains(target.getId()))
+				{
+					renderTargetItem(graphics, target, image);
+				}
 			}
-
 		}
 		return null;
 	}

@@ -3,6 +3,7 @@ package com.ectoplasmator;
 import com.google.inject.Provides;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.inject.Inject;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.NPC;
@@ -42,9 +44,6 @@ public class EctoplasmatorPlugin extends Plugin
 	@Inject
 	private EctoplasmatorOverlay overlay;
 
-	@Getter
-	private Item[] inventoryItems;
-
 	@Getter(AccessLevel.PACKAGE)
 	private final List<NPC> NPCTargets = new ArrayList<>();
 
@@ -53,7 +52,6 @@ public class EctoplasmatorPlugin extends Plugin
 	public void onNpcSpawned(NpcSpawned npcSpawned)
 	{
 		NPC npc = npcSpawned.getNpc();
-		// TODO: Add a conditional for spectral creatures
 		NPCTargets.add(npc);
 	}
 
@@ -65,39 +63,17 @@ public class EctoplasmatorPlugin extends Plugin
 		NPCTargets.remove(npc);
 	}
 
-	// This gets called when a player picks up, drops, or takes an item from the bank
-	@Subscribe
-	public void onItemContainerChanged(final ItemContainerChanged event)
-	{
-		final ItemContainer itemContainer = event.getItemContainer();
-		inventoryItems = itemContainer.getItems();
-	}
-
-	// When a menu is clicked - item is clicked - or player clicks to walk
-	@Subscribe
-	public void onMenuOptionClicked(final MenuOptionClicked event)
-	{
-		if (event.getMenuOption() == null)
-		{
-			return;
-		}
-
-		// Reloads the overlay render and checks if the ectoplasmator is in the player's inventory
-		overlay.revalidate();
-	}
-
 	@Override
 	protected void startUp() throws Exception
 	{
 		overlayManager.add(overlay);
+		overlay.revalidate();
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
 		overlayManager.remove(overlay);
-
-		inventoryItems = null;
 		NPCTargets.clear();
 	}
 

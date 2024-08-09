@@ -1,6 +1,8 @@
 package com.ectoplasmator;
+
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import net.runelite.api.NpcID;
@@ -10,12 +12,15 @@ public class SpectralCreatures
 	@Getter(AccessLevel.PACKAGE)
 	private final List<Integer> SpectralCreatures = new ArrayList<>();
 
-	// Populates the NPC list
+	// CONSTRUCTOR // Populates the NPC list
 	// Ideally this would be by querying the npc type (spectral) but this can't be done with the runelite
 	// API as it's considered cheating.
-	// Instead the wiki was used to make this list:
+	// Instead, the wiki was used to make this list:
 	// https://oldschool.runescape.wiki/w/Spectral_(attribute)
-	public void populateNPCList(){
+	@Inject
+	private SpectralCreatures()
+	{
+		SpectralCreatures.clear();
 		SpectralCreatures.add(NpcID.ABERRANT_SPECTRE);
 		SpectralCreatures.add(NpcID.ABERRANT_SPECTRE_3);
 		SpectralCreatures.add(NpcID.ABERRANT_SPECTRE_4);
