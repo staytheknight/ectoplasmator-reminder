@@ -73,6 +73,7 @@ public class EctoplasmatorPlugin extends Plugin
 		inventoryItems = itemContainer.getItems();
 	}
 
+	// When a menu is clicked - item is clicked - or player clicks to walk
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event)
 	{
@@ -81,6 +82,7 @@ public class EctoplasmatorPlugin extends Plugin
 			return;
 		}
 
+		// Reloads the overlay render and checks if the ectoplasmator is in the player's inventory
 		overlay.revalidate();
 	}
 
