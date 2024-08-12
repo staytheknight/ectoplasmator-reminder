@@ -35,7 +35,10 @@ public interface EctoplasmatorConfig extends Config
 		name = "Hide Overlay in Wilderness",
 		description = "Hide the Ectoplasmator overlay while in the wilderness"
 	)
-	default boolean hideInWilderness() { return false; }
+	default boolean hideInWilderness()
+	{
+		return false;
+	}
 
 	@ConfigItem(
 		position = 4,
@@ -46,5 +49,16 @@ public interface EctoplasmatorConfig extends Config
 	default int verticalOffset()
 	{
 		return 50;
+	}
+
+	@ConfigItem(
+		position = 5,
+		keyName = "overlayScale",
+		name = "Overlay Scale",
+		description = "Scale (size) of the Ectoplasmator overlay"
+	)
+	default int overlayScale()
+	{
+		return 1;
 	}
 }

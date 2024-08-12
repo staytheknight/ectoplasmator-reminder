@@ -2,7 +2,10 @@ package com.ectoplasmator;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import static java.awt.Image.SCALE_DEFAULT;
 import java.awt.image.BufferedImage;
+import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,9 +34,12 @@ class EctoplasmatorOverlay extends Overlay
 	private final ItemManager itemManager;
 
 	// Display variables
-	private boolean combatStatus;
+	private BufferedImage image;								// Image variable the render loop uses
+	private BufferedImage baseImage;							// Default image information used for scaling
+	private boolean combatStatus;								// Combat status of player
 	private List<Boolean> displayChecks = new ArrayList<>();    // Boolean array of display toggles
-	private boolean displayToggle;                                // Final display toggle boolean
+	private boolean displayToggle;								// Final display toggle boolean
+	private int previousDisplayScale = 1;
 
 	// Class Constructor
 	@Inject
@@ -45,20 +51,42 @@ class EctoplasmatorOverlay extends Overlay
 		setPosition(OverlayPosition.DYNAMIC);
 		setLayer(OverlayLayer.UNDER_WIDGETS);
 
+		// Setting defaults for image variables
+		baseImage = itemManager.getImage(ItemID.ECTOPLASMATOR);
+		image = baseImage;
+
 		// sets default render toggle to be true
 		displayToggle = true;
 	}
 
+	// This is called in the EctoplasmatorPlugin.java to change the combat status
 	public void setCombatStatus(boolean combatStatus)
 	{
 		this.combatStatus = combatStatus;
 	}
 
+	// Casts an Image to BufferedImage
+	public BufferedImage imageToBufferedImage(Image image)
+	{
+		int width = image.getWidth(null);
+		int height = image.getHeight(null);
+		BufferedImage bufferedImage = new BufferedImage(width, height, TYPE_INT_ARGB);
+		bufferedImage.getGraphics().drawImage(image,0,0,null);
+		return bufferedImage;
+	}
+
+	// Scales the base image to user configuration
+	public void scaleImage()
+	{
+		image = imageToBufferedImage(baseImage.getScaledInstance(baseImage.getWidth()*config.overlayScale(),
+			baseImage.getHeight()*config.overlayScale(),
+			SCALE_DEFAULT));
+		previousDisplayScale = config.overlayScale();
+	}
+
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
-		// Gets the image for the Ectoplasmator to be rendered
-		final BufferedImage image = itemManager.getImage(ItemID.ECTOPLASMATOR);
 		// Error Catch if the image is null
 		if (image == null)
 		{
