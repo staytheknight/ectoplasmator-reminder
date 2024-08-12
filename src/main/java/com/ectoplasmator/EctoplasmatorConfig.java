@@ -30,7 +30,7 @@ import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 
-@ConfigGroup("example")
+@ConfigGroup("Ectoplasmator Reminder Configs")
 public interface EctoplasmatorConfig extends Config
 {
 	// Display Behaviour Section
