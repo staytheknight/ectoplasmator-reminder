@@ -36,4 +36,15 @@ public interface EctoplasmatorConfig extends Config
 		description = "Hide the Ectoplasmator overlay while in the wilderness"
 	)
 	default boolean hideInWilderness() { return false; }
+
+	@ConfigItem(
+		position = 4,
+		keyName = "overlayVerticalOffset",
+		name = "Overlay Vertical Offset",
+		description = "How high above the NPCs the overlay is displayed, this is to customize location in case it's conflicting with the position of other addons."
+	)
+	default int verticalOffset()
+	{
+		return 50;
+	}
 }

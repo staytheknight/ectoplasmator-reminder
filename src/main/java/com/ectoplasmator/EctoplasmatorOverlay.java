@@ -142,8 +142,7 @@ class EctoplasmatorOverlay extends Overlay
 	private void renderTargetItem(Graphics2D graphics, NPC actor, BufferedImage image)
 	{
 		final LocalPoint actorPosition = actor.getLocalLocation();
-		// TODO: set +40 offset to config
-		final int offset = actor.getLogicalHeight() + 40;
+		final int offset = actor.getLogicalHeight() + config.verticalOffset();
 
 		if (actorPosition == null || image == null)
 		{
