@@ -24,9 +24,6 @@ import net.runelite.client.ui.overlay.OverlayUtil;
 class EctoplasmatorOverlay extends Overlay
 {
 	@Inject
-	private SpectralCreatures spectralCreatures;
-
-	@Inject
 	private EctoplasmatorConfig config;
 
 	private final Client client;
@@ -132,7 +129,7 @@ class EctoplasmatorOverlay extends Overlay
 		for (NPC target : targets)
 		{
 			// Checks if the target is a spectral creature
-			if (spectralCreatures.getSpectralCreatures().contains(target.getId()))
+			if (SpectralCreatures.SPECTRALCREATURES.contains(target.getId()))
 			{
 				renderTargetItem(graphics, target, image);
 			}
