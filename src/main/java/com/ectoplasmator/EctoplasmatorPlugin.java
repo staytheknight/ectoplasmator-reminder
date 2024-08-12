@@ -43,29 +43,44 @@ public class EctoplasmatorPlugin extends Plugin
 	@Getter(AccessLevel.PACKAGE)
 	private final List<NPC> NPCTargets = new ArrayList<>();
 
-	Timer timer = new Timer("Timer");
+	// Timer
+	Timer outOfCombatTimer = new Timer("Timer");
+	// Combat ends after 10 seconds (player is able to log)
+	long outOfCombatDelay = 10000L; // 10000L = 10 seconds
+	// The timer task that sets the combat statue to false
+	TimerTask outOfCombatTask = null;
 
-	// Triggers when a hitsplat is detected (on player & on NPC from the player)
-	@Subscribe
-	public void onHitsplatApplied(HitsplatApplied hitSplat) throws InterruptedException
+	// Function that will re-initialize the outOfCombatTask, as it gets canceled
+	// from time to time which clears it's run() function
+	public void outOfCombatTaskSetup()
 	{
-		// Sets the in combat statue to true, and calls the combat timer
-		overlay.setCombatStatus(true);
-		outOfCombat();
-	}
-
-	// Combat timer sets the combat statue to false after 10 seconds
-	public void outOfCombat() throws InterruptedException
-	{
-		TimerTask task = new TimerTask()
+		outOfCombatTask = new TimerTask()
 		{
 			public void run()
 			{
 				overlay.setCombatStatus(false);
 			}
 		};
-		long delay = 10000L; // 10000L = 10 seconds
-		timer.schedule(task, delay);
+	}
+
+	// Triggers when a hitsplat is detected (on player & on NPC from the player)
+	@Subscribe
+	public void onHitsplatApplied(HitsplatApplied hitSplat) throws InterruptedException
+	{
+		// If the hit splat is applied to the player or is from the player start the combat timer
+		if (hitSplat.getActor() == client.getLocalPlayer() || hitSplat.getHitsplat().isMine())
+		{
+			// Cancels any previous out of combat timers
+			outOfCombatTask.cancel();
+			outOfCombatTimer.purge();
+			// Re-initializes a new combat task, as .cancel() purges the run() function
+			outOfCombatTaskSetup();
+			// Sets the in combat statue to true
+			overlay.setCombatStatus(true);
+			// Start the combat timer
+			outOfCombatTimer.schedule(outOfCombatTask, outOfCombatDelay);
+		}
+
 	}
 
 	// When an NPC spawns, add it to the NPC targets list
@@ -90,6 +105,7 @@ public class EctoplasmatorPlugin extends Plugin
 		overlayManager.add(overlay);
 		overlay.revalidate();
 		overlay.setCombatStatus(false);
+		outOfCombatTaskSetup();
 	}
 
 	@Override
