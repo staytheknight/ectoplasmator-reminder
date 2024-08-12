@@ -1,3 +1,28 @@
+/*
+ * Copyright (c) 2024, Elise Chevaier <https://github.com/staytheknight>
+ * <https://elisechevalier.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.ectoplasmator;
 
 import java.awt.Dimension;
@@ -34,11 +59,11 @@ class EctoplasmatorOverlay extends Overlay
 	private final ItemManager itemManager;
 
 	// Display variables
-	private BufferedImage image;								// Image variable the render loop uses
-	private BufferedImage baseImage;							// Default image information used for scaling
-	private boolean combatStatus;								// Combat status of player
+	private BufferedImage image;                                // Image variable the render loop uses
+	private BufferedImage baseImage;                            // Default image information used for scaling
+	private boolean combatStatus;                                // Combat status of player
 	private List<Boolean> displayChecks = new ArrayList<>();    // Boolean array of display toggles
-	private boolean displayToggle;								// Final display toggle boolean
+	private boolean displayToggle;                                // Final display toggle boolean
 	private int previousDisplayScale = 1;
 
 	// Class Constructor
@@ -71,15 +96,15 @@ class EctoplasmatorOverlay extends Overlay
 		int width = image.getWidth(null);
 		int height = image.getHeight(null);
 		BufferedImage bufferedImage = new BufferedImage(width, height, TYPE_INT_ARGB);
-		bufferedImage.getGraphics().drawImage(image,0,0,null);
+		bufferedImage.getGraphics().drawImage(image, 0, 0, null);
 		return bufferedImage;
 	}
 
 	// Scales the base image to user configuration
 	public void scaleImage()
 	{
-		image = imageToBufferedImage(baseImage.getScaledInstance(baseImage.getWidth()*config.overlayScale(),
-			baseImage.getHeight()*config.overlayScale(),
+		image = imageToBufferedImage(baseImage.getScaledInstance(baseImage.getWidth() * config.overlayScale(),
+			baseImage.getHeight() * config.overlayScale(),
 			SCALE_DEFAULT));
 		previousDisplayScale = config.overlayScale();
 	}
