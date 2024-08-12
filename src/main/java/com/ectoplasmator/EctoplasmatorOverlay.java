@@ -13,6 +13,7 @@ import static net.runelite.api.ItemID.*;
 import net.runelite.api.NPC;
 import net.runelite.api.Perspective;
 import net.runelite.api.Point;
+import net.runelite.api.Varbits;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.Overlay;
@@ -90,6 +91,10 @@ class EctoplasmatorOverlay extends Overlay
 		{
 			displayChecks.add(combatStatus);
 		}
+		if (config.hideInWilderness())
+		{
+			displayChecks.add(client.getVarbitValue(Varbits.IN_WILDERNESS) != 1);
+		}
 
 		// Iterates through the display check boolean array to see if any of the booleans are false
 		// If they are false set the master toggle to false and break
@@ -106,6 +111,7 @@ class EctoplasmatorOverlay extends Overlay
 			}
 		}
 
+		// Catch if none of the config settings are checked - default behaviour is to display
 		if (displayChecks.isEmpty())
 		{
 			displayToggle = true;

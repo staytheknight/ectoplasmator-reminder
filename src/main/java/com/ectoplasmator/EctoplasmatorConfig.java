@@ -28,4 +28,12 @@ public interface EctoplasmatorConfig extends Config
 	{
 		return false;
 	}
+
+	@ConfigItem(
+		position = 3,
+		keyName = "hideInWilderness",
+		name = "Hide Overlay in Wilderness",
+		description = "Hide the Ectoplasmator overlay while in the wilderness"
+	)
+	default boolean hideInWilderness() { return false; }
 }
