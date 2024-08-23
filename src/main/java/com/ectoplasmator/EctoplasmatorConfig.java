@@ -56,7 +56,7 @@ public interface EctoplasmatorConfig extends Config
 	@ConfigItem(
 		position = 2,
 		keyName = "displayOnlyInCombat",
-		name = "Display Only In Combat",
+		name = "Hide Out of Combat",
 		description = "Display the Ectoplasmator overlay only while in combat",
 		section = displayBehaviourSection
 	)
@@ -67,6 +67,18 @@ public interface EctoplasmatorConfig extends Config
 
 	@ConfigItem(
 		position = 3,
+		keyName = "hideBosses",
+		name = "Hide for Bosses",
+		description = "Hide the Ectoplasmator overlay for bosses",
+		section = displayBehaviourSection
+	)
+	default boolean hideForBosses()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		position = 4,
 		keyName = "hideInWilderness",
 		name = "Hide Overlay in Wilderness",
 		description = "Hide the Ectoplasmator overlay while in the wilderness",
@@ -81,12 +93,12 @@ public interface EctoplasmatorConfig extends Config
 	@ConfigSection(
 		name = "Display Location & Scale",
 		description = "Controls to change the size and vertical location of the Ectoplasmator overlay",
-		position = 4
+		position = 5
 	)
 	String displayControls = "Display Location & Scale";
 
 	@ConfigItem(
-		position = 5,
+		position = 6,
 		keyName = "overlayVerticalOffset",
 		name = "Overlay Vertical Offset",
 		description = "How high above the NPCs he overlay is displayed, this is to customize location in case it's conflicting with the position of other addons.",
@@ -98,7 +110,7 @@ public interface EctoplasmatorConfig extends Config
 	}
 
 	@ConfigItem(
-		position = 6,
+		position = 7,
 		keyName = "overlayScale",
 		name = "Overlay Scale",
 		description = "Scale (size) of the Ectoplasmator overlay",

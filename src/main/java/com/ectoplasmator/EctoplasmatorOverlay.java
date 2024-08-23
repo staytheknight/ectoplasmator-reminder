@@ -39,6 +39,7 @@ import net.runelite.api.InventoryID;
 import net.runelite.api.ItemID;
 import static net.runelite.api.ItemID.*;
 import net.runelite.api.NPC;
+import net.runelite.api.NpcID;
 import net.runelite.api.Perspective;
 import net.runelite.api.Point;
 import net.runelite.api.Varbits;
@@ -181,10 +182,22 @@ class EctoplasmatorOverlay extends Overlay
 	{
 		for (NPC target : targets)
 		{
-			// Checks if the target is a spectral creature
-			if (SpectralCreatures.SPECTRALCREATURES.contains(target.getId()))
+			if (config.hideForBosses())
 			{
-				renderTargetItem(graphics, target, image);
+				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getId()))
+				{
+					renderTargetItem(graphics, target, image);
+				}
+			}
+			else
+			{
+				// Checks if the target is a spectral creature
+				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getId())
+					|| SpectralCreatures.SPECTRALBOSSES.contains(target.getId()))
+				{
+					renderTargetItem(graphics, target, image);
+				}
+
 			}
 		}
 	}
