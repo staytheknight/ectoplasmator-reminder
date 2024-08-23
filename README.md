@@ -22,11 +22,13 @@ The list of creatures with this attribute can be found on the [wiki](https://old
 <img src="https://github.com/staytheknight/ectoplasmator-reminder/blob/master/src/main/resources/README%20Images/EctoplasmatorPluginConfig.PNG" align="left" />
 
 **Display Behaviour**
-1. <ins>Hide overlay if in Inventory</ins>: Toggle to hide the overlay if the ectorplasmator is in the player's inventory.<br>
+1. <ins>Hide Overlay if in Inventory</ins>: Toggle to hide the overlay if the ectorplasmator is in the player's inventory.<br>
 Gives control to the player in case they want to see the overlay even when they have the ectoplasmator in their inventory.
-2. <ins>Display only in combat</ins>: Toggle to only show overlay while in combat with spectral creatures.<br>
+2. <ins>Hide Out of Combat</ins>: Toggle to only show overlay while in combat with spectral creatures.<br>
 Gives control the player in case they only want to see the overlay while in combat.
-3. <ins>Hide Overlay in Wilderness</ins>: Toggle to hide the overlay while in the wilderness.<br>
+3. <ins>Hide for Bosses</ins>: Toggle to hide the overlay for boss creatures.<br>
+Gives control to players who may not want to show the overlay for boss creatures.
+4. <ins>Hide Overlay in Wilderness</ins>: Toggle to hide the overlay while in the wilderness.<br>
 Gives control to the player in case they want to hide the overlay while in the wilderness, as they may not want to bring their ectoplasmator into the wilderness.
 
 <br><br><br>

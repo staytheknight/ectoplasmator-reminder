@@ -44,7 +44,7 @@ public interface EctoplasmatorConfig extends Config
 	@ConfigItem(
 		position = 1,
 		keyName = "hideWhileInInventory",
-		name = "Hide overlay if in Inventory",
+		name = "Hide Overlay if in Inventory",
 		description = "Hides the Ectoplasmator overlay if it's in player's inventory",
 		section = displayBehaviourSection
 	)
