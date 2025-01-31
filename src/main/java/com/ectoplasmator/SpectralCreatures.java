@@ -25,200 +25,50 @@
  */
 package com.ectoplasmator;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
-import net.runelite.api.NpcID;
+import java.net.*;
+import java.io.*;
+import java.util.*;
 
-public class SpectralCreatures
+public abstract class SpectralCreatures
 {
 	// Ideally this would be by querying the npc type (spectral) but this can't be done with the runelite
 	// API as it's considered cheating.
 	// Instead, the wiki was used to make this list:
 	// https://oldschool.runescape.wiki/w/Spectral_(attribute)
-	@Getter
-	public static final ImmutableSet<Integer> SPECTRALCREATURES = ImmutableSet.of(
-		NpcID.ABERRANT_SPECTRE_3,
-		NpcID.ABERRANT_SPECTRE_4,
-		NpcID.ABERRANT_SPECTRE_5,
-		NpcID.ABERRANT_SPECTRE_6,
-		NpcID.ABERRANT_SPECTRE_7,
-		NpcID.ABHORRENT_SPECTRE,
-		NpcID.ANGRY_BARBARIAN_SPIRIT,
-		NpcID.ANKOU,
-		NpcID.ANKOU_2515,
-		NpcID.ANKOU_2516,
-		NpcID.ANKOU_2517,
-		NpcID.ANKOU_2518,
-		NpcID.ANKOU_2519,
-		NpcID.ANKOU_6608,
-		NpcID.ANKOU_7257,
-		NpcID.ANKOU_7864,
-		NpcID.ASYN_SHADE,
-		NpcID.ASYN_SHADOW,
-		NpcID.ASYN_SHADOW_5632,
-		NpcID.BANSHEE,
-		NpcID.BERSERK_BARBARIAN_SPIRIT,
-		NpcID.DARK_ANKOU,
-		NpcID.DEATH_WING,
-		NpcID.DEVIANT_SPECTRE,
-		NpcID.ENRAGED_BARBARIAN_SPIRIT,
-		NpcID.EVIL_SPIRIT,
-		NpcID.FEROCIOUS_BARBARIAN_SPIRIT,
-		NpcID.FIYR_SHADE,
-		NpcID.FIYR_SHADOW,
-		NpcID.FORGOTTEN_SOUL,
-		NpcID.FORGOTTEN_SOUL_10524,
-		NpcID.FORGOTTEN_SOUL_10525,
-		NpcID.FORGOTTEN_SOUL_10526,
-		NpcID.FORGOTTEN_SOUL_10534,
-		NpcID.FORGOTTEN_SOUL_10535,
-		NpcID.FORGOTTEN_SOUL_10536,
-		NpcID.FORGOTTEN_SOUL_10537,
-		NpcID.FORGOTTEN_SOUL_10544,
-		NpcID.FORGOTTEN_SOUL_10545,
-		NpcID.FROST_NAGUA,
-		NpcID.FROST_NAGUA_13787,
-		NpcID.FROST_NAGUA_13788,
-		NpcID.GHAST,
-		NpcID.GHAST_946,
-		NpcID.GHAST_5622,
-		NpcID.GHAST_5623,
-		NpcID.GHAST_5624,
-		NpcID.GHAST_5625,
-		NpcID.GHAST_5626,
-		NpcID.GHAST_5627,
-		NpcID.GHOST_5370,
-		NpcID.GHOST_3975,
-		NpcID.GHOST_3976,
-		NpcID.GHOST_3977,
-		NpcID.GHOST_3978,
-		NpcID.GHOST_3979,
-		NpcID.GHOST_86,
-		NpcID.GHOST_87,
-		NpcID.GHOST_88,
-		NpcID.GHOST_89,
-		NpcID.GHOST_90,
-		NpcID.GHOST_91,
-		NpcID.GHOST_92,
-		NpcID.GHOST_93,
-		NpcID.GHOST_94,
-		NpcID.GHOST_95,
-		NpcID.GHOST_96,
-		NpcID.GHOST_97,
-		NpcID.GHOST_98,
-		NpcID.GHOST_99,
-		NpcID.GHOST_472,
-		NpcID.GHOST_473,
-		NpcID.GHOST_474,
-		NpcID.GHOST_506,
-		NpcID.GHOST_507,
-		NpcID.GHOST_7263,
-		NpcID.GHOST_7264,
-		NpcID.GHOST_3625,
-		NpcID.GHOST_2531,
-		NpcID.GHOST_2532,
-		NpcID.GHOST_2533,
-		NpcID.GHOST_2534,
-		NpcID.GHOST_2527,
-		NpcID.GHOST_2528,
-		NpcID.GHOST_2529,
-		NpcID.GHOST_2530,
-		NpcID.IRVIG_SENAY,
-		NpcID.LOAR_SHADE,
-		NpcID.LOAR_SHADOW,
-		NpcID.OTHERWORLDLY_BEING,
-		NpcID.PHRIN_SHADE,
-		NpcID.PHRIN_SHADOW,
-		NpcID.RANALPH_DEVERE,
-		NpcID.REPUGNANT_SPECTRE,
-		NpcID.REVENANT_CYCLOPS,
-		NpcID.REVENANT_DARK_BEAST,
-		NpcID.REVENANT_DEMON,
-		NpcID.REVENANT_DRAGON,
-		NpcID.REVENANT_GOBLIN,
-		NpcID.REVENANT_HELLHOUND,
-		NpcID.REVENANT_HOBGOBLIN,
-		NpcID.REVENANT_IMP,
-		NpcID.REVENANT_KNIGHT,
-		NpcID.REVENANT_ORK,
-		NpcID.REVENANT_PYREFIEND,
-		NpcID.RIYL_SHADE,
-		NpcID.RIYL_SHADOW,
-		NpcID.RIYL_SHADOW_5631,
-		NpcID.SAN_TOJALON,
-		NpcID.SCREAMING_BANSHEE,
-		NpcID.SCREAMING_TWISTED_BANSHEE,
-		NpcID.SHADE,
-		NpcID.SHADE_7258,
-		NpcID.SHADE_6740,
-		NpcID.SPIRITUAL_MAGE,
-		NpcID.SPIRITUAL_MAGE_2244,
-		NpcID.SPIRITUAL_MAGE_3161,
-		NpcID.SPIRITUAL_MAGE_3168,
-		NpcID.SPIRITUAL_MAGE_11292,
-		NpcID.SPIRITUAL_RANGER,
-		NpcID.SPIRITUAL_RANGER_2242,
-		NpcID.SPIRITUAL_RANGER_3160,
-		NpcID.SPIRITUAL_RANGER_3167,
-		NpcID.SPIRITUAL_RANGER_11291,
-		NpcID.SPIRITUAL_WARRIOR,
-		NpcID.SPIRITUAL_WARRIOR_2243,
-		NpcID.SPIRITUAL_WARRIOR_3159,
-		NpcID.SPIRITUAL_WARRIOR_3166,
-		NpcID.SPIRITUAL_WARRIOR_11290,
-		NpcID.SULPHUR_NAGUA,
-		NpcID.SULPHUR_NAGUA_13033,
-		NpcID.TORTURED_SOUL,
-		NpcID.TWISTED_BANSHEE,
-		NpcID.URIUM_SHADE,
-		NpcID.URIUM_SHADOW
-	);
-	@Getter
-	public static final ImmutableSet<Integer> SPECTRALBOSSES = ImmutableSet.of(
-		NpcID.AMOXLIATL,
-		NpcID.AMOXLIATL_13686,
-		NpcID.AMOXLIATL_13687,
-		NpcID.AMOXLIATL_13689,
-		NpcID.AHRIM_THE_BLIGHTED,
-		NpcID.AHRIM_THE_BLIGHTED_12316,
-		NpcID.AHRIM_THE_BLIGHTED_12322,
-		NpcID.DHAROK_THE_WRETCHED,
-		NpcID.DHAROK_THE_WRETCHED_12317,
-		NpcID.DHAROK_THE_WRETCHED_12323,
-		NpcID.DHAROK_THE_WRETCHED_12447,
-		NpcID.GUTHAN_THE_INFESTED,
-		NpcID.GUTHAN_THE_INFESTED_12318,
-		NpcID.GUTHAN_THE_INFESTED_12324,
-		NpcID.KARIL_THE_TAINTED,
-		NpcID.KARIL_THE_TAINTED_12319,
-		NpcID.KARIL_THE_TAINTED_12325,
-		NpcID.KASONDE_THE_CRAVEN_12332,
-		NpcID.KASONDE_THE_CRAVEN,
-		NpcID.KETLA_THE_UNWORTHY,
-		NpcID.KETLA_THE_UNWORTHY_12330,
-		NpcID.PERSTEN_THE_DECEITFUL,
-		NpcID.PHANTOM_MUSPAH,
-		NpcID.PHANTOM_MUSPAH_12078,
-		NpcID.PHANTOM_MUSPAH_12079,
-		NpcID.PHANTOM_MUSPAH_12080,
-		NpcID.PHANTOM_MUSPAH_12082,
-		NpcID.NAZASTAROOL_5355,
-		NpcID.NAZASTAROOL_6400,
-		NpcID.REVENANT_MALEDICTUS,
-		NpcID.THE_FORSAKEN_ASSASSIN,
-		NpcID.TORAG_THE_CORRUPTED,
-		NpcID.TORAG_THE_CORRUPTED_12320,
-		NpcID.TORAG_THE_CORRUPTED_12326,
-		NpcID.TREE_SPIRIT,
-		NpcID.TREE_SPIRIT_6380,
-		NpcID.TREE_SPIRIT_HARD,
-		NpcID.TREUS_DAYTH_6359,
-		NpcID.TREUS_DAYTH_HARD,
-		NpcID.VERAC_THE_DEFILED,
-		NpcID.VERAC_THE_DEFILED_12321,
-		NpcID.VERAC_THE_DEFILED_12327
-	);
 
+	@Getter
+	static Set<Integer> SPECTRALCREATURES = new HashSet<Integer>();
+
+	@Getter
+    static Set<Integer> SPECTRALBOSSES = new HashSet<Integer>();
+
+	// Reads a URL containing a plain text list of the spectral creatures
+	// This text file is stored on a separate branch to prevent main branch from having to be pushed
+	// every time a new creature is added.
+	public static void FetchSpectralCreaturesLists() throws IOException {
+		URL oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt");
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(oracle.openStream()));
+
+		String inputLine;
+		while ((inputLine = in.readLine()) != null)
+		{
+			int ID = Integer.parseInt(inputLine);
+			SPECTRALCREATURES.add(ID);
+		}
+
+		oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt");
+		in = new BufferedReader(
+				new InputStreamReader(oracle.openStream()));
+
+		while ((inputLine = in.readLine()) != null)
+		{
+			int ID = Integer.parseInt(inputLine);
+			SPECTRALBOSSES.add(ID);
+		}
+		in.close();
+	}
 }
 
 

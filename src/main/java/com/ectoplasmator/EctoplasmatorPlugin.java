@@ -126,6 +126,7 @@ public class EctoplasmatorPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
+		SpectralCreatures.FetchSpectralCreaturesLists();
 		overlayManager.add(overlay);
 		overlay.revalidate();
 		overlay.setCombatStatus(false);
