@@ -58,7 +58,7 @@ public abstract class SpectralCreatures
 			SPECTRALCREATURES.add(ID);
 		}
 
-		oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt");
+		oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralBosses.txt");
 		in = new BufferedReader(
 				new InputStreamReader(oracle.openStream()));
 
