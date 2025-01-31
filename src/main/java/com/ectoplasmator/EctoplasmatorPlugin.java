@@ -154,6 +154,4 @@ public class EctoplasmatorPlugin extends Plugin
 	{
 		return configManager.getConfig(EctoplasmatorConfig.class);
 	}
-
-
 }

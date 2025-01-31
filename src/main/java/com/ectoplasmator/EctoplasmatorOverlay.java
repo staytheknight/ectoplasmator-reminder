@@ -120,7 +120,7 @@ class EctoplasmatorOverlay extends Overlay
 		}
 
 		// Gets list of NPCS to render the image above
-		final List<NPC> targets = plugin.getNPCTargets();
+		List<NPC> targets = plugin.getNPCTargets();
 		// Error catch for if the npc target list is empty
 		if (targets.isEmpty())
 		{
@@ -184,7 +184,7 @@ class EctoplasmatorOverlay extends Overlay
 		{
 			if (config.hideForBosses())
 			{
-				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getId()))
+				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getName()))
 				{
 					renderTargetItem(graphics, target, image);
 				}
@@ -192,8 +192,8 @@ class EctoplasmatorOverlay extends Overlay
 			else
 			{
 				// Checks if the target is a spectral creature
-				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getId())
-					|| SpectralCreatures.SPECTRALBOSSES.contains(target.getId()))
+				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getName())
+					|| SpectralCreatures.SPECTRALBOSSES.contains(target.getName()))
 				{
 					renderTargetItem(graphics, target, image);
 				}

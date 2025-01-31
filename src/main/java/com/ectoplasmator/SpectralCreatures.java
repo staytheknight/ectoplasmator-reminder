@@ -38,10 +38,10 @@ public abstract class SpectralCreatures
 	// https://oldschool.runescape.wiki/w/Spectral_(attribute)
 
 	@Getter
-	static Set<Integer> SPECTRALCREATURES = new HashSet<Integer>();
+	static Set<String> SPECTRALCREATURES = new HashSet<String>();
 
 	@Getter
-    static Set<Integer> SPECTRALBOSSES = new HashSet<Integer>();
+    static Set<String> SPECTRALBOSSES = new HashSet<String>();
 
 	// Reads a URL containing a plain text list of the spectral creatures
 	// This text file is stored on a separate branch to prevent main branch from having to be pushed
@@ -54,9 +54,9 @@ public abstract class SpectralCreatures
 		String inputLine;
 		while ((inputLine = in.readLine()) != null)
 		{
-			int ID = Integer.parseInt(inputLine);
-			SPECTRALCREATURES.add(ID);
+			SPECTRALCREATURES.add(inputLine);
 		}
+
 
 		oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralBosses.txt");
 		in = new BufferedReader(
@@ -64,8 +64,7 @@ public abstract class SpectralCreatures
 
 		while ((inputLine = in.readLine()) != null)
 		{
-			int ID = Integer.parseInt(inputLine);
-			SPECTRALBOSSES.add(ID);
+			SPECTRALBOSSES.add(inputLine);
 		}
 		in.close();
 	}
