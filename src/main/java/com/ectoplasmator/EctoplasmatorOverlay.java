@@ -191,9 +191,12 @@ class EctoplasmatorOverlay extends Overlay
 			}
 			else
 			{
-				// Checks if the target is a spectral creature
-				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getName())
-					|| SpectralCreatures.SPECTRALBOSSES.contains(target.getName()))
+				// Checks if the target is in the spectral creature name list
+				String targetName = target.getName();
+                assert targetName != null;
+                targetName = targetName.toLowerCase();
+				if (SpectralCreatures.SPECTRALCREATURES.contains(targetName)
+					|| SpectralCreatures.SPECTRALBOSSES.contains(targetName))
 				{
 					renderTargetItem(graphics, target, image);
 				}

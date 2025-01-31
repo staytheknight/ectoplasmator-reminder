@@ -47,6 +47,8 @@ public abstract class SpectralCreatures
 	// This text file is stored on a separate branch to prevent main branch from having to be pushed
 	// every time a new creature is added.
 	public static void FetchSpectralCreaturesLists() throws IOException {
+		String s = "";
+
 		URL oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt");
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(oracle.openStream()));
@@ -54,7 +56,8 @@ public abstract class SpectralCreatures
 		String inputLine;
 		while ((inputLine = in.readLine()) != null)
 		{
-			SPECTRALCREATURES.add(inputLine);
+			s = inputLine.toLowerCase();
+			SPECTRALCREATURES.add(s);
 		}
 
 
@@ -64,7 +67,8 @@ public abstract class SpectralCreatures
 
 		while ((inputLine = in.readLine()) != null)
 		{
-			SPECTRALBOSSES.add(inputLine);
+			s = inputLine.toLowerCase();
+			SPECTRALBOSSES.add(s);
 		}
 		in.close();
 	}

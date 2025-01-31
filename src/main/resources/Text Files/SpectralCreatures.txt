@@ -3,6 +3,7 @@ Abhorrent spectre
 Angry barbarian spirit
 Ankou
 Asyn Shade
+Asyn Shadow
 Banshee
 Berserk barbarian spirit
 Dark Ankou
@@ -12,6 +13,7 @@ Enraged barbarian spirit
 Evil spirit
 Ferocious barbarian spirit
 Fiyr Shade
+Fiyr Shadow
 Forgotten Soul
 Frost Nagua
 Ghast
@@ -19,8 +21,10 @@ Ghost
 Haze
 Irvig Senay	Irvig Senay
 Loar Shade
+Loar Shadow
 Otherworldly being
 Phrin Shade
+Phrin Shadow
 Ranalph Devere
 Repugnant spectre
 Revenant cyclops
@@ -48,3 +52,4 @@ Sulphur Nagua
 Tortured soul
 Twisted Banshee
 Urium Shade
+Urium Shadow
