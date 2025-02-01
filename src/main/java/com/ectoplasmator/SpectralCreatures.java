@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, Elise Chevaier <https://github.com/staytheknight>
+ * Copyright (c) 2024, Elise Chevalier <https://github.com/staytheknight>
  * <https://elisechevalier.com>
  * All rights reserved.
  *
@@ -26,7 +26,12 @@
 package com.ectoplasmator;
 
 import lombok.Getter;
-import java.net.*;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Callback;
+
 import java.io.*;
 import java.util.*;
 
@@ -43,34 +48,56 @@ public abstract class SpectralCreatures
 	@Getter
     static Set<String> SPECTRALBOSSES = new HashSet<String>();
 
+	final static String S_CREATURE_URL = "https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt";
+	final static String S_BOSS_URL = "https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralBosses.txt";
+
 	// Reads a URL containing a plain text list of the spectral creatures
 	// This text file is stored on a separate branch to prevent main branch from having to be pushed
 	// every time a new creature is added.
-	public static void FetchSpectralCreaturesLists() throws IOException {
-		String s = "";
+	public static void FetchSpectralCreaturesLists() throws IOException
+	{
+		CallUrl(S_CREATURE_URL, SPECTRALCREATURES);
+		CallUrl(S_BOSS_URL, SPECTRALBOSSES);
+	}
 
-		URL oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt");
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(oracle.openStream()));
+	static void CallUrl(String url, Set<String> set)
+	{
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder()
+				.url(url)
+				.build();
 
-		String inputLine;
-		while ((inputLine = in.readLine()) != null)
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onResponse(Call call, Response response) throws IOException
+			{
+				assert response.body() != null;
+				String s = response.body().string();
+				response.body().close();
+
+				// Sends the string to a processor to split each line into a Set
+				ProcessStringInput(s, set);
+			}
+
+			@Override
+			public void onFailure(Call call, IOException e)
+			{
+				System.out.println("Unable to read creature file");
+				e.printStackTrace();
+			}
+		});
+	}
+
+	// Processes a string of names separated by a new line character into the chosen set
+	static void ProcessStringInput(String string, Set<String> set)
+	{
+		String[] parts = string.split("\n");
+
+		// NOTE: The string must be all lowercase, as the Overlay checks for lowercase string match
+		for (String s : parts)
 		{
-			s = inputLine.toLowerCase();
-			SPECTRALCREATURES.add(s);
+			set.add(s.toLowerCase(Locale.ROOT));
 		}
-
-
-		oracle = new URL("https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralBosses.txt");
-		in = new BufferedReader(
-				new InputStreamReader(oracle.openStream()));
-
-		while ((inputLine = in.readLine()) != null)
-		{
-			s = inputLine.toLowerCase();
-			SPECTRALBOSSES.add(s);
-		}
-		in.close();
 	}
 }
 

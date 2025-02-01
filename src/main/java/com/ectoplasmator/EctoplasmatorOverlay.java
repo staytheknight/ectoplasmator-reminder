@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, Elise Chevaier <https://github.com/staytheknight>
+ * Copyright (c) 2024, Elise Chevalier <https://github.com/staytheknight>
  * <https://elisechevalier.com>
  * All rights reserved.
  *
@@ -182,9 +182,13 @@ class EctoplasmatorOverlay extends Overlay
 	{
 		for (NPC target : targets)
 		{
+			String targetName = target.getName();
+			assert targetName != null;
+			targetName = targetName.toLowerCase();
+
 			if (config.hideForBosses())
 			{
-				if (SpectralCreatures.SPECTRALCREATURES.contains(target.getName()))
+				if (SpectralCreatures.SPECTRALCREATURES.contains(targetName))
 				{
 					renderTargetItem(graphics, target, image);
 				}
@@ -192,9 +196,6 @@ class EctoplasmatorOverlay extends Overlay
 			else
 			{
 				// Checks if the target is in the spectral creature name list
-				String targetName = target.getName();
-                assert targetName != null;
-                targetName = targetName.toLowerCase();
 				if (SpectralCreatures.SPECTRALCREATURES.contains(targetName)
 					|| SpectralCreatures.SPECTRALBOSSES.contains(targetName))
 				{

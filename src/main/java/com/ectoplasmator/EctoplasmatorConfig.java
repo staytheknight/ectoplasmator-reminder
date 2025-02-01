@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, Elise Chevaier <https://github.com/staytheknight>
+ * Copyright (c) 2024, Elise Chevalier <https://github.com/staytheknight>
  * <https://elisechevalier.com>
  * All rights reserved.
  *
