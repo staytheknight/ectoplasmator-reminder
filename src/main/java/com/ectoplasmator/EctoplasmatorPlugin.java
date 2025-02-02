@@ -64,6 +64,9 @@ public class EctoplasmatorPlugin extends Plugin
 	@Inject
 	private EctoplasmatorOverlay overlay;
 
+	@Inject
+	private SpectralCreatures S_Creatures;
+
 	@Getter(AccessLevel.PACKAGE)
 	private final List<NPC> NPCTargets = new ArrayList<>();
 
@@ -126,7 +129,7 @@ public class EctoplasmatorPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		SpectralCreatures.FetchSpectralCreaturesLists();
+		S_Creatures.FetchSpectralCreaturesLists();
 		overlayManager.add(overlay);
 		overlay.revalidate();
 		overlay.setCombatStatus(false);

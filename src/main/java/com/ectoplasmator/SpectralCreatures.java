@@ -32,10 +32,10 @@ import javax.inject.Inject;
 import java.io.*;
 import java.util.*;
 
-public abstract class SpectralCreatures
+public class SpectralCreatures
 {
 	@Inject
-	private static OkHttpClient okClient;
+	private OkHttpClient okClient;
 
 	// Ideally this would be by querying the npc type (spectral) but this can't be done with the runelite
 	// API as it's considered cheating.
@@ -54,14 +54,13 @@ public abstract class SpectralCreatures
 	// Reads a URL containing a plain text list of the spectral creatures
 	// This text file is stored on a separate branch to prevent main branch from having to be pushed
 	// every time a new creature is added.
-	public static void FetchSpectralCreaturesLists() throws IOException
+	public void FetchSpectralCreaturesLists() throws IOException
 	{
-		okClient = new OkHttpClient();
 		CallUrl(S_CREATURE_URL, SPECTRALCREATURES);
 		CallUrl(S_BOSS_URL, SPECTRALBOSSES);
 	}
 
-	static void CallUrl(String url, Set<String> set)
+	protected void CallUrl(String url, Set<String> set)
 	{
 		Request request = new Request.Builder()
 				.url(url)
