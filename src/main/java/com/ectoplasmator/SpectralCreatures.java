@@ -26,17 +26,17 @@
 package com.ectoplasmator;
 
 import lombok.Getter;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Callback;
+import okhttp3.*;
 
+import javax.inject.Inject;
 import java.io.*;
 import java.util.*;
 
 public abstract class SpectralCreatures
 {
+	@Inject
+	private static OkHttpClient okClient;
+
 	// Ideally this would be by querying the npc type (spectral) but this can't be done with the runelite
 	// API as it's considered cheating.
 	// Instead, the wiki was used to make this list:
@@ -56,18 +56,18 @@ public abstract class SpectralCreatures
 	// every time a new creature is added.
 	public static void FetchSpectralCreaturesLists() throws IOException
 	{
+		okClient = new OkHttpClient();
 		CallUrl(S_CREATURE_URL, SPECTRALCREATURES);
 		CallUrl(S_BOSS_URL, SPECTRALBOSSES);
 	}
 
 	static void CallUrl(String url, Set<String> set)
 	{
-		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder()
 				.url(url)
 				.build();
 
-		client.newCall(request).enqueue(new Callback() {
+		okClient.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onResponse(Call call, Response response) throws IOException
 			{
