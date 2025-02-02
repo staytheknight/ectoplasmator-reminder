@@ -31,6 +31,8 @@ import okhttp3.*;
 import javax.inject.Inject;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SpectralCreatures
 {
@@ -50,6 +52,8 @@ public class SpectralCreatures
 
 	final static String S_CREATURE_URL = "https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralCreatures.txt";
 	final static String S_BOSS_URL = "https://raw.githubusercontent.com/staytheknight/ectoplasmator-reminder/refs/heads/TextFiles/src/main/resources/Text%20Files/SpectralBosses.txt";
+
+	static Logger S_Log = Logger.getLogger(SpectralCreatures.class.getName());
 
 	// Reads a URL containing a plain text list of the spectral creatures
 	// This text file is stored on a separate branch to prevent main branch from having to be pushed
@@ -81,8 +85,8 @@ public class SpectralCreatures
 			@Override
 			public void onFailure(Call call, IOException e)
 			{
-				System.out.println("Unable to read creature file");
-				e.printStackTrace();
+				S_Log.log(Level.FINE, "Unable to read creature file\n");
+				S_Log.log(Level.INFO, Arrays.toString(e.getStackTrace()));
 			}
 		});
 	}
